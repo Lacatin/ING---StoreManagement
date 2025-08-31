@@ -9,5 +9,6 @@ public interface IProductService {
     List<ProductDto> findAllProducts();
     ProductDto findProduct(String productId);
     ProductDto createProduct(ProductDto product);
+    void deleteProduct(String id);
     ProductDto updateProduct(String productId, UpdateProductDto product);
 }

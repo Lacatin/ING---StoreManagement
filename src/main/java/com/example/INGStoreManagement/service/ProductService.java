@@ -15,6 +15,7 @@ import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,7 +39,7 @@ public class ProductService implements IProductService {
     public ProductDto findProduct(String productId) {
         Assert.notNull(productId, "ID must not be null!");
 
-        ProductEntity product = productRepository.findById(productId)
+        ProductEntity product = productRepository.findById(UUID.fromString(productId))
                 .orElseThrow(() -> new ProductNotFoundException(productId));
 
         return productMapper.toDto(product);
@@ -58,11 +59,20 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public void deleteProduct(String productId) {
+        Assert.hasText(productId, "Product name must not be empty!");
+
+        var existingProduct = productRepository.findById(UUID.fromString(productId)).orElseThrow(() -> new ProductNotFoundException(productId));
+
+        productRepository.delete(existingProduct);
+    }
+
+    @Override
     @Transactional
     public ProductDto updateProduct(String productId, UpdateProductDto updateProductDto) {
         Assert.notNull(productId, "ID must not be null!");
 
-        var existingProduct = productRepository.findById(productId)
+        var existingProduct = productRepository.findById(UUID.fromString(productId))
                 .orElseThrow(() -> new ProductNotFoundException(productId));
 
         /*
@@ -74,7 +84,7 @@ public class ProductService implements IProductService {
                 .ifPresent(newName -> {
                     productRepository
                             .findByName(newName)
-                            .filter(product -> !product.getId().equals(productId))
+                            .filter(product -> !product.getId().toString().equals(productId))
                             .ifPresent(product -> {throw new ProductAlreadyExistsException(newName); });
 
                     existingProduct.setName(newName);

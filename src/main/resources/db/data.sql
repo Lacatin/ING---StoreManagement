@@ -1,3 +1,3 @@
-INSERT INTO product (name, price, quantity) VALUES ('Laptop', 3500.00, 10);
-INSERT INTO product (name, price, quantity) VALUES ('Smartphone', 2000.00, 25);
-INSERT INTO product (name, price, quantity) VALUES ('Headphones', 250.00, 50);
+INSERT INTO products (id, name, price, quantity) VALUES (UUID(), 'Laptop', 3500.00, 10);
+INSERT INTO products (id, name, price, quantity) VALUES (UUID(), 'Mouse', 50.00, 100);
+INSERT INTO products (id, name, price, quantity) VALUES (UUID(), 'Keyboard', 150.00, 50);
