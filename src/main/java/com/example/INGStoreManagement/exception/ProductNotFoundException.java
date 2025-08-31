@@ -1,0 +1,7 @@
+package com.example.INGStoreManagement.exception;
+
+public class ProductNotFoundException extends RuntimeException {
+    public ProductNotFoundException(String id) {
+        super("Product with ID " + id + " was not found");
+    }
+}

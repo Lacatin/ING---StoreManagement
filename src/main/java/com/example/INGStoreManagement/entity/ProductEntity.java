@@ -1,15 +1,14 @@
 package com.example.INGStoreManagement.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Table(name = "products",
+        uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 @Entity
 @Builder
 @NoArgsConstructor
@@ -17,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private String name;
     private Double price;
