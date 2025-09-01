@@ -8,6 +8,7 @@ import com.example.INGStoreManagement.exception.ProductNotFoundException;
 import com.example.INGStoreManagement.mapper.ProductMapper;
 import com.example.INGStoreManagement.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -18,6 +19,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductService implements IProductService {
@@ -28,6 +30,7 @@ public class ProductService implements IProductService {
     @Override
     @Transactional(readOnly = true)
     public List<ProductDto> findAllProducts() {
+        log.info("Searching for all the products...");
         return productRepository.findAll()
                 .stream()
                 .map(productMapper::toDto)
@@ -39,6 +42,7 @@ public class ProductService implements IProductService {
     public ProductDto findProduct(String productId) {
         Assert.notNull(productId, "ID must not be null!");
 
+        log.info("Searching for product with id {}...", productId);
         ProductEntity product = productRepository.findById(UUID.fromString(productId))
                 .orElseThrow(() -> new ProductNotFoundException(productId));
 
@@ -52,6 +56,7 @@ public class ProductService implements IProductService {
         Assert.isTrue(productDto.getPrice() > 0, "Price must be greater than 0!");
         Assert.isTrue(productDto.getQuantity() >= 0, "Quantity cannot be negative!");
 
+        log.info("Creating new product...");
         var existingProduct = productRepository.findByName(productDto.getName());
         if (existingProduct.isPresent()) throw new ProductAlreadyExistsException(productDto.getName());
 
@@ -62,6 +67,7 @@ public class ProductService implements IProductService {
     public void deleteProduct(String productId) {
         Assert.hasText(productId, "Product name must not be empty!");
 
+        log.info("Deleting product with id {}...", productId);
         var existingProduct = productRepository.findById(UUID.fromString(productId)).orElseThrow(() -> new ProductNotFoundException(productId));
 
         productRepository.delete(existingProduct);
@@ -72,6 +78,7 @@ public class ProductService implements IProductService {
     public ProductDto updateProduct(String productId, UpdateProductDto updateProductDto) {
         Assert.notNull(productId, "ID must not be null!");
 
+        log.info("Updating product with id {}...", productId);
         var existingProduct = productRepository.findById(UUID.fromString(productId))
                 .orElseThrow(() -> new ProductNotFoundException(productId));
 
