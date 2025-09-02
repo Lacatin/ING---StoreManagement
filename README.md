@@ -39,9 +39,6 @@ A simple Spring Boot application for managing products in a store. This project 
 
 ---
 
-## Testing
-Endpoints can be tested using the [attached Postman collection](src/main/resources/ING%20-%20Store%20Management.postman_collection.json)
-
 ## Future Developments
 
 This project is a solid foundation, but there are several improvements that could be made for production readiness:
@@ -58,4 +55,9 @@ This project is a solid foundation, but there are several improvements that coul
 - **Implement Proper User Authentication & Management**  
   - Currently, authentication uses in-memory users with static credentials.  
   - Future development should implement a `User` entity and repository to store users in the database.  
-  - Roles should be managed dynamically, allowing creation and modification of users and roles at runtime.  
+  - Roles should be managed dynamically, allowing creation and modification of users and roles at runtime.
+ 
+---
+
+## Testing
+Endpoints can be tested using the [attached Postman collection](src/main/resources/ING%20-%20Store%20Management.postman_collection.json)
