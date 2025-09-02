@@ -1,4 +1,4 @@
-# ING Store Management
+# ING Homework - Store Management Application
 
 A simple Spring Boot application for managing products in a store. This project demonstrates RESTful APIs, HTTP basic authentication, role-based access, and exception handling using Spring Security.
 
@@ -25,8 +25,7 @@ A simple Spring Boot application for managing products in a store. This project 
 
 ---
 
-## Technologies[Uploading ING - Store Management.postman_collection.json…]()
-
+## Technologies
 
 - Java 24  
 - Spring Boot 3.5.5  
