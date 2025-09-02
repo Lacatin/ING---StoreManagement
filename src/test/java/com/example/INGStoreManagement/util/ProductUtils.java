@@ -1,5 +1,6 @@
 package com.example.INGStoreManagement.util;
 
+import com.example.INGStoreManagement.dto.ProductDto;
 import com.example.INGStoreManagement.dto.UpdateProductDto;
 import com.example.INGStoreManagement.entity.ProductEntity;
 import lombok.experimental.UtilityClass;
@@ -15,6 +16,15 @@ public class ProductUtils {
         var id = String.valueOf(RANDOM.nextInt(10000, 99999));
         return ProductEntity.builder()
                 .id(UUID.randomUUID())
+                .name("NAME_" + id)
+                .price(RANDOM.nextDouble(1000))
+                .quantity(RANDOM.nextInt(0, 100))
+                .build();
+    }
+
+    public static ProductDto getRandomProductDtoWithoutId() {
+        var id = String.valueOf(RANDOM.nextInt(10000, 99999));
+        return ProductDto.builder()
                 .name("NAME_" + id)
                 .price(RANDOM.nextDouble(1000))
                 .quantity(RANDOM.nextInt(0, 100))

@@ -9,12 +9,13 @@ import com.example.INGStoreManagement.repository.ProductRepository;
 import com.example.INGStoreManagement.util.ProductUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mapstruct.factory.Mappers;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
 
     @Mock private ProductRepository productRepository;
@@ -166,7 +167,12 @@ public class ProductServiceTest {
     @MethodSource("updateProductProvider")
     public void whenUpdateOnlyOneProductParameter_thenOnlyOneParameterIsChanged(UpdateProductDto updateProductDto, ProductEntity expected) {
         when(productRepository.findById(expected.getId())).thenReturn(Optional.of(expected));
-        when(productRepository.findByName(updateProductDto.getName())).thenReturn(Optional.of(expected));
+
+        if (updateProductDto.getName() != null) {
+            when(productRepository.findByName(updateProductDto.getName()))
+                    .thenReturn(Optional.empty());
+        }
+
         when(productRepository.save(any(ProductEntity.class))).thenAnswer(i -> i.getArgument(0));
 
         var result = productService.updateProduct(expected.getId().toString(), updateProductDto);
