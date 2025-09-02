@@ -8,8 +8,8 @@ A simple Spring Boot application for managing products in a store. This project 
 
 - [Features](#features)  
 - [Technologies](#technologies)
+- [Future Developments](#future-developments)
 - [Testing](#technologies)
-- [Future Developments](#future-developments) 
 
 ---
 
